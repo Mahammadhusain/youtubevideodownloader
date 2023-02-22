@@ -8,7 +8,7 @@ from pytube.exceptions import VideoUnavailable
 def HomeView(request):
 
     try:
-        video_url = YouTube('https://www.youtube.com/playlist?list=PLbGui_ZYuhigchy8DTw4pX4duTTpvqlh6')
+        video_url = YouTube('https://www.youtube.com/watch?v=P98-VNuu85c')
 
         author = video_url.author
         publish_date = video_url.publish_date
