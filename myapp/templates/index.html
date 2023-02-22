@@ -23,12 +23,10 @@ Index | Page
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">{{video_title}}</h5>
-              
-             
-                
-              
-
-              
+              <p class="card-text"><b>Author:</b>{{author}}</p>
+              <p class="card-text"><b>Publish Date:</b> {{publish_date}}</p>
+              <p class="card-text"><b>Channel Link:</b> <a href="{{channel_url}}">Link</a></p>
+              <p class="card-text"><b>Description:</b><pre>{{description}}</pre></p>
             </div>
           </div>
         </div>
@@ -46,7 +44,7 @@ Index | Page
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
           tabindex="0">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>Quality</th>
@@ -82,21 +80,40 @@ Index | Page
           </table>
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="..." class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Quality</th>
+                <th>File Type</th>
+                <th>Download Size (in MB)</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in streams_list %}
+              
+              {% if i.filesize_mb %}
+              {% if i.file_type == 'audio' %}
+                
+              
+                
+              <tr>
+                <!-- <td>{{video_title|truncatewords:6}} ({{i.video_quality}}) - {{i.resolution}}</td> -->
+                <td>{{i.abr}}</td>
+                <td>{{i.mime_type}}</td>
+                <td>{{i.filesize_mb}}</td>
+                <td>
+                  <a href="{{i.download_url}}" class="btn btn-sm btn-outline-primary">
+                    Download
+                  </a>
+                </td>
+              </tr>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+              
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
