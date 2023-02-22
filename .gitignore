@@ -1,0 +1,22 @@
+# Virtual environments
+venv/
+env/
+myenv/
+menv/
+
+# SQLite databases
+db.sqlite3
+ok*
+ok.html
+ok.py
+ok1.py
+
+# Media files
+media/
+
+# Requirements for data entry using automation
+auto_requirements.txt
+migrations_apply.py
+
+# Cache files
+__pycache__
