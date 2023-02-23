@@ -6,6 +6,8 @@ from pytube.exceptions import VideoUnavailable
 
 
 def HomeView(request):
+    check_get_req = True if request.method == "GET" else False
+    
 
     if request.method == "POST":
         try:
@@ -59,7 +61,8 @@ def HomeView(request):
         except:
             print("***********")
             return render(request, 'single_video.html')
-    return render(request, 'single_video.html')
+    context = {"check_get_req":check_get_req}
+    return render(request, 'single_video.html',context)
 
 
 def PlaylistView(request):

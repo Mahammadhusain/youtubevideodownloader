@@ -10,11 +10,15 @@ Index | Page
     <div class="col-sm-12">
       <form class="d-flex" method="POST" role="search">
         {% csrf_token %}
-        <input class="form-control me-2" onclick="paste(this)" name="video_url" type="search"
+        <input class="form-control mx-auto align-middle align-self-center " onclick="paste(this)" name="video_url" type="search"
           placeholder="Click for past if you copied youtube video url" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+        <!-- <i class="bi bi-search"></i> -->
       </form>
     </div>
+
+    
+    {% if not check_get_req %}
+
     <div class="col-sm-12 mt-3">
       <div class="card mb-3">
         <div class="row g-0">
@@ -143,7 +147,7 @@ Index | Page
       </div>
 
     </div>
-
+    {% endif %}
 
   </div>
 </div>

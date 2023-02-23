@@ -6,11 +6,11 @@ Index | Page
 
 {% block body %}
 <div class="container">
-  <div class="row mt-3">
-    <div class="col-sm-12">
+  <div class="row mt-3 ">
+    <div class="col-sm-12 ">
       <form class="d-flex" method="POST" role="search">
         {% csrf_token %}
-        <input class="form-control me-2" onclick="paste(this)" name="video_url" type="search"
+        <input class="form-control  " onclick="paste(this)" name="video_url" type="search"
           placeholder="Click for past if you copied youtube video url" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
       </form>
