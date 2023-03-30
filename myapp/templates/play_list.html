@@ -5,153 +5,180 @@ Index | Page
 {% endblock title %}
 
 {% block body %}
-<div class="container">
-  <div class="row mt-3 ">
-    <div class="col-sm-12 ">
-      <form class="d-flex" method="POST" role="search">
-        {% csrf_token %}
-        <input class="form-control  " onclick="paste(this)" name="video_url" type="search"
-          placeholder="Click for past if you copied youtube video url" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
-    <div class="col-sm-12 mt-3">
-      <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col-md-3 p-2 pe-0">
-            <img src="{{video_thumbnail}}" style="height: 200px; width: 100%; border-radius: 8px;"
-              class="img-fluid  rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title"><b>{{video_title}}</b></h5>
-              <p class="card-text text-muted"><b>Author: </b>{{author}}</p>
-              <p class="card-text text-muted"><b>Publish Date: </b> {{publish_date}}</p>
-              <p class="card-text text-muted"><b>Channel Link: </b> <a href="{{channel_url}}">Link here</a></p>
-              <p class="card-text text-muted"><b>Description:
-                  <a type="button" class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Open here...!
-                  </a></b>
 
-              </p>
-            </div>
+
+<div class="row mt-3">
+  <div class="col-sm-12">
+    <form class="d-flex m-4" method="POST" role="search">
+      {% csrf_token %}
+      <input class="form-control mx-auto align-middle align-self-center " onclick="paste(this)" name="playlist_url"
+        type="search" placeholder="Click for past if you copied youtube video url" aria-label="Search">
+
+      <select name="Resolution" id="Resolution">
+        <option value="" disabled selected hidden>Resolution</option>
+        <option value="720p">720p</option>
+        <option value="144p">144p</option>
+        <option value="360p">360p</option>
+        <option value="2160p">2160p</option>
+        <option value="1440p">1440p</option>
+        <option value="1080p">1080p</option>
+        <option value="480p">480p</option>
+        <option value="360p">360p</option>
+        <option value="240p">240p</option>
+        <option value="144p">144p</option>
+      </select>
+
+    
+      <!-- <i class="bi bi-search"></i> -->
+    </form>
+  </div>
+
+
+  {% if not check_get_req %}
+
+  {% comment %} <div class="col-sm-12 mt-3">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-3 p-2 pe-0">
+          <img src="{{video_thumbnail}}" style="height: 200px; width: 100%; border-radius: 8px;"
+            class="img-fluid  rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><b>{{video_title}}</b></h5>
+            <p class="card-text text-muted"><b>Author: </b>{{author}}</p>
+            <p class="card-text text-muted"><b>Publish Date: </b> {{publish_date}}</p>
+            <p class="card-text text-muted"><b>Channel Link: </b> <a href="{{channel_url}}">Link here</a></p>
+            <p class="card-text text-muted"><b>Description:
+                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Open here...!
+                </a></b>
+
+            </p>
           </div>
         </div>
       </div>
     </div>
+  </div> {% endcomment %}
+
+  {% for video_context in videos_context %}
+
+  <div class="col-sm-12 mt-3 border p-3" style="background-color: aliceblue;">
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+          type="button" role="tab" aria-controls="pills-home" aria-selected="true">Video files</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+          type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Audio files</button>
+      </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+        tabindex="0">
+        <table class="table table-sm table-striped table-hover table-responsive">
+          <thead class="table-secondary">
+            <tr>
+              <th>Resolution (in PX)</th>
+              <th>Video Quality</th>
+              <th>File Type</th>
+              <th>Download Size (in MB)</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in video_context.streams_list %}
+
+            {% if i.filesize_mb %}
+            {% if i.file_type == 'video' %}
 
 
-    <div class="col-sm-12 mt-3 border p-3" style="background-color: aliceblue;">
 
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Video files</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Audio files</button>
-        </li>
-
-      </ul>
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
-          tabindex="0">
-          <table class="table table-sm table-striped table-hover table-responsive">
-            <thead class="table-secondary">
-              <tr>
-                <th>Resolution (in PX)</th>
-                <th>Video Quality</th>
-                <th>File Type</th>
-                <th>Download Size (in MB)</th>
-                <th>Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for i in streams_list %}
-
-              {% if i.filesize_mb %}
-              {% if i.file_type == 'video' %}
-
-
-
-              <tr>
-                <td>
-                  {{i.resolution}}
-                </td>
-                <td>
-                  {% if i.resolution_int >= 720 and i.resolution_int < 2160 %} 
-                  <span class="badge rounded-pill text-bg-danger">HD</span>
+            <tr>
+              <td>
+                {{i.resolution}}
+              </td>
+              <td>
+                {% if i.resolution_int >= 720 and i.resolution_int < 2160 %} <span
+                  class="badge rounded-pill text-bg-danger">HD</span>
                   {% elif i.resolution_int >= 2160 %}
                   <span class="badge rounded-pill text-bg-success">UHD-(4K)</span>
-                  {% else %} 
-                    <span class="badge rounded-pill text-bg-secondary">SD</span>
+                  {% else %}
+                  <span class="badge rounded-pill text-bg-secondary">SD</span>
                   {% endif %}
 
-                </td>
+              </td>
 
-                <td>{{i.mime_type}}</td>
-                <td>{{i.filesize_mb}}mb</td>
-                <td>
-                  <a href="{{i.download_url}}" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-title="Dowload Now !" class="btn btn-sm btn-outline-primary">
-                    <i class="bi bi-download"></i>
-                  </a>
-                </td>
-              </tr>
-              {% endif %}
-              {% endif %}
-              {% endfor %}
+              <td>{{i.mime_type}}</td>
+              <td>{{i.filesize_mb}}mb</td>
+              <td>
+                <a href="{{i.download_url}}" data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="Dowload Now !" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-download"></i>
+                </a>
+              </td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
 
-            </tbody>
-          </table>
-        </div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-          <table class="table table-sm table-striped table-hover table-responsive ">
-            <thead class="table-secondary">
-              <tr>
-                <th>Sound Quality</th>
-                <th>File Type</th>
-                <th>Download Size (in MB)</th>
-                <th>Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for i in streams_list %}
-              {% if i.filesize_mb %}
-              {% if i.file_type == 'audio' %}
-              <tr>
-                <td>
-                  <span class="badge rounded-pill text-dark bg-warning ">{{i.abr}}</span>
-                </td>
-                <td>{{i.mime_type}}</td>
-                <td>{{i.filesize_mb}}mb</td>
-                <td>
-                  <a href="{{i.download_url}}" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-title="Dowload Now !" class="btn btn-sm btn-outline-primary">
-                    <i class="bi bi-download"></i>
-                  </a>
-                </td>
-              </tr>
-              {% endif %}
-              {% endif %}
-              {% endfor %}
-
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+        <table class="table table-sm table-striped table-hover table-responsive ">
+          <thead class="table-secondary">
+            <tr>
+              <th>Sound Quality</th>
+              <th>File Type</th>
+              <th>Download Size (in MB)</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in video_context.streams_list %}
+            {% if i.filesize_mb %}
+            {% if i.file_type == 'audio' %}
+            <tr>
+              <td>
+                <span class="badge rounded-pill text-dark bg-warning ">{{i.abr}}</span>
+              </td>
+              <td>{{i.mime_type}}</td>
+              <td>{{i.filesize_mb}}mb</td>
+              <td>
+                <a href="{{i.download_url}}" data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="Dowload Now !" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-download"></i>
+                </a>
+              </td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
 
+          </tbody>
+        </table>
+      </div>
     </div>
 
-
   </div>
+
+  {% endfor %}
+
+
+  {% endif %}
+
+</div>
 </div>
 
 
 
 
 
+{% comment %}
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -170,7 +197,7 @@ Index | Page
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 
 
